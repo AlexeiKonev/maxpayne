@@ -8,6 +8,7 @@ public class Shooting : MonoBehaviour
 
     public float range = 100f;
     public float shootingDelay = 10f;
+    public float hitForce = 10f; // Сила импульса при попадании
 
     public ParticleSystem[] shootParticles;
     public ParticleSystem bulletCollisionParticles;
@@ -47,6 +48,16 @@ public class Shooting : MonoBehaviour
                 bulletCollisionParticles.transform.LookAt(mainCameraTransform);
 
                 bulletCollisionParticles.Play();
+
+                // Применяем импульс к объекту, по которому попал выстрел, если у него есть Rigidbody
+                Rigidbody hitRigidbody = hit.collider.GetComponent<Rigidbody>();
+                if (hitRigidbody != null)
+                {
+                    // Направление импульса - противоположное направлению луча выстрела
+                    Vector3 impulseDirection = -direction;
+                    // Придаем импульс объекту
+                    hitRigidbody.AddForce(impulseDirection * hitForce, ForceMode.Impulse);
+                }
             }
         }
     }
