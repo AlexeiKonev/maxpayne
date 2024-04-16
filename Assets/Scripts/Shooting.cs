@@ -48,16 +48,16 @@ public class Shooting : MonoBehaviour
                 bulletCollisionParticles.transform.LookAt(mainCameraTransform);
 
                 bulletCollisionParticles.Play();
-
-                // Применяем импульс к объекту, по которому попал выстрел, если у него есть Rigidbody
+                // Применяем импульс к объекту, по которому попал выстрел, чтобы он отталкивался от героя
                 Rigidbody hitRigidbody = hit.collider.GetComponent<Rigidbody>();
                 if (hitRigidbody != null)
                 {
-                    // Направление импульса - противоположное направлению луча выстрела
-                    Vector3 impulseDirection = -direction;
+                    // Направление импульса - от героя к объекту попадания
+                    Vector3 impulseDirection = hit.point - mainCameraTransform.position;
                     // Придаем импульс объекту
-                    hitRigidbody.AddForce(impulseDirection * hitForce, ForceMode.Impulse);
+                    hitRigidbody.AddForce(impulseDirection.normalized * hitForce, ForceMode.Impulse);
                 }
+
             }
         }
     }
