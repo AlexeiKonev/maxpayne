@@ -6,6 +6,8 @@ public class Shooting : MonoBehaviour
 {
     public bool canShoot = true;
 
+    public int damageAmount = 20 ;
+
     public float range = 100f;
     public float shootingDelay = 10f;
     public float hitForce = 10f; // Сила импульса при попадании
@@ -44,6 +46,15 @@ public class Shooting : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(mainCameraTransform.position, direction, out hit, range, layerMask))
             {
+                // Проверяем, попали ли во врага
+                EnemyController enemy = hit.transform.GetComponent<EnemyController>();
+
+                if (enemy != null)
+                {
+                    // Если попали во врага, наносим ему урон
+                    enemy.TakeDamage(damageAmount);
+                }
+
                 bulletCollisionParticles.transform.position = hit.point;
                 bulletCollisionParticles.transform.LookAt(mainCameraTransform);
 
