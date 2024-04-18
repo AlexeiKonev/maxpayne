@@ -64,6 +64,7 @@ public class PlayerController : MonoBehaviour
     private Animator playerAnimator = null;
     private Transform playerTransform = null;
     private Rigidbody playerRigidbody = null;
+    private bool timeSlowed =false;
 
     /// <summary>
     /// Инициализация параметров.
@@ -127,6 +128,24 @@ public class PlayerController : MonoBehaviour
         {
             isAiming = false;
         }
+
+
+        if (Input.GetKeyDown(KeyCode.LeftAlt) )
+        {
+            if (!timeSlowed)
+            {
+            timeSlowed = true;
+            SlowDownTime();
+            }
+            else
+            {
+                timeSlowed = false;
+                NormalizeTime();
+            }
+            
+           
+        }
+        
 
         // Прыжок или поднятие
         if (Input.GetKeyDown(KeyCode.Space))
