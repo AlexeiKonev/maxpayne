@@ -3,10 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
+enum PlayerStates { Jump,SlowJump,Stand,Walk}
+
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Animator))]
 public class PlayerController : MonoBehaviour
 {
+    PlayerStates playerStates;
+
+    [Header("Параметры для стрельбы")]
+    public Shooting shooting;
+
+    [SerializeField] private bool isRunning = false;
+    [SerializeField] private bool isAiming = false;
+    [SerializeField] private bool handsAreRaised = false;
+    [SerializeField] private bool isGrounded = true;
+    [SerializeField] private bool isStanding = true;
+    [SerializeField] private bool isTryingToStand = false;
+
+    private float currentTimeForRisingHands = 0f;
+    private float currentArmsWeight = 0f;
+    private float neededTimeForGroundCheck = 0f;
+
+    private Vector3 runDirection;
+    private Vector3 crosshairPosition;
+    private Vector3 crosshairWorldPositionWithOffsets;
+    private Vector3 rightArmAimPosition;
+    private Vector3 leftArmAimPosition;
+
+    private Camera mainCamera = null;
+    private Animator playerAnimator = null;
+    private Transform playerTransform = null;
+    private Rigidbody playerRigidbody = null;
+    [SerializeField] private bool timeSlowed = false;
     [Header("Параметры для движения")]
     public float moveSpeed = 5f;
 
@@ -40,31 +69,7 @@ public class PlayerController : MonoBehaviour
     public PostProcessProfile mainPPProfile = null;
     public PostProcessProfile slowtimePPProfile = null;
 
-    [Header("Параметры для стрельбы")]
-    public Shooting shooting;
-
-    private bool isRunning = false;
-    private bool isAiming = false;
-    private bool handsAreRaised = false;
-    private bool isGrounded = true;
-    private bool isStanding = true;
-    private bool isTryingToStand = false;
-
-    private float currentTimeForRisingHands = 0f;
-    private float currentArmsWeight = 0f;
-    private float neededTimeForGroundCheck = 0f;
-
-    private Vector3 runDirection;
-    private Vector3 crosshairPosition;
-    private Vector3 crosshairWorldPositionWithOffsets;
-    private Vector3 rightArmAimPosition;
-    private Vector3 leftArmAimPosition;
-
-    private Camera mainCamera = null;
-    private Animator playerAnimator = null;
-    private Transform playerTransform = null;
-    private Rigidbody playerRigidbody = null;
-    private bool timeSlowed =false;
+   
 
     /// <summary>
     /// Инициализация параметров.
@@ -173,11 +178,7 @@ public class PlayerController : MonoBehaviour
                 GetUp();
             }
         }
-        //if (isGrounded && !isStanding && !isTryingToStand)
-        //{
-        //    isTryingToStand = true;
-        //    GetUp();
-        //}
+       
     }
 
     private void FixedUpdate()
@@ -378,7 +379,8 @@ public class PlayerController : MonoBehaviour
         //SlowDownTime();
 
         // Время, после которого будет осуществляться проверка на приземление
-        //neededTimeForGroundCheck = Time.time + delayBeforeCheck;
+         neededTimeForGroundCheck = Time.time + delayBeforeCheck;
+        CheckForGroundedSimple();
     }
 
     /// <summary>
@@ -406,6 +408,31 @@ public class PlayerController : MonoBehaviour
         if (isGrounded)
         {
             NormalizeTime();
+            
+        }
+    }private void CheckForGroundedSimple()
+    {
+        if (Time.time < neededTimeForGroundCheck) return;
+
+        CapsuleCollider playerCapsCollider = jumpingPlayerCollider.GetComponent<CapsuleCollider>();
+        Bounds playerCapsColliderBounds = playerCapsCollider.bounds;
+        Vector3 offsetVector = new Vector3(0f, 0f, playerCapsCollider.height / 2);
+
+        Ray[] checkingRays = {
+                                new Ray(playerCapsColliderBounds.center, Vector3.down),
+                                new Ray(playerCapsColliderBounds.center + offsetVector, Vector3.down),
+                                new Ray(playerCapsColliderBounds.center - offsetVector, Vector3.down),
+                             };
+
+        foreach (Ray currentRay in checkingRays)
+        {
+            isGrounded |= Physics.Raycast(currentRay, checkDistance, checkingLayers);
+        }
+
+        if (isGrounded)
+        {
+            NormalizeTime();
+            
         }
     }
 

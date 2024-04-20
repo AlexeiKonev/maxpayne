@@ -19699,7 +19699,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 471207571}
-  m_LocalRotation: {x: 0.12551306, y: -0.000000008535157, z: 0.0000000010798129, w: 0.992092}
+  m_LocalRotation: {x: 0.12551306, y: 0.000000008535157, z: -0.0000000010798129, w: 0.992092}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -45168,7 +45168,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1418335813}
-  m_LocalRotation: {x: 0.0032249836, y: 6.3627643e-18, z: -6.0329494e-20, w: 0.9999948}
+  m_LocalRotation: {x: 0.0032249817, y: 0.0000000018626357, z: -6.0069974e-12, w: 0.9999948}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -74290,9 +74290,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 464928800681298523}
+  - component: {fileID: 3470194620189898826}
   - component: {fileID: 7564289831562487585}
   - component: {fileID: 3470194620189898825}
-  - component: {fileID: 3470194620189898826}
   - component: {fileID: 3470194620189898829}
   m_Layer: 9
   m_Name: Player (1)
@@ -74340,6 +74340,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8e66872aa079c849a930d63eb04fae9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shooting: {fileID: 3470194620189898829}
+  isRunning: 0
+  isAiming: 0
+  handsAreRaised: 0
+  isGrounded: 1
+  isStanding: 1
+  isTryingToStand: 0
+  timeSlowed: 0
   moveSpeed: 5
   rotationStep: 15
   zOffsetHeadArms: 1000
@@ -74361,7 +74369,6 @@ MonoBehaviour:
   mainPPVolume: {fileID: 1860512083}
   mainPPProfile: {fileID: 11400000, guid: ad9bc32405096c045848d60b65c899eb, type: 2}
   slowtimePPProfile: {fileID: 11400000, guid: 3c50c7cf552756745b7989b1ba9c8f46, type: 2}
-  shooting: {fileID: 3470194620189898829}
 --- !u!114 &3470194620189898829
 MonoBehaviour:
   m_ObjectHideFlags: 0
