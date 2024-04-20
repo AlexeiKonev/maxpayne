@@ -159,7 +159,25 @@ public class PlayerController : MonoBehaviour
                 isTryingToStand = true;
                 GetUp();
             }
+        } 
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            if (isGrounded && isStanding)
+            {
+                JumpSimple(); 
+                
+            }
+            else if (isGrounded && !isStanding && !isTryingToStand)
+            {
+                isTryingToStand = true;
+                GetUp();
+            }
         }
+        //if (isGrounded && !isStanding && !isTryingToStand)
+        //{
+        //    isTryingToStand = true;
+        //    GetUp();
+        //}
     }
 
     private void FixedUpdate()
@@ -322,6 +340,45 @@ public class PlayerController : MonoBehaviour
 
         // Время, после которого будет осуществляться проверка на приземление
         neededTimeForGroundCheck = Time.time + delayBeforeCheck;
+    }  
+    private void JumpSimple()
+    {
+        // Обнуляем скорость игрока, чтобы он не пролетал больше нужного
+        playerRigidbody.velocity = Vector3.zero;
+
+        // Изменяем статус игрока
+        isGrounded = false;
+        isStanding = false;
+
+        // Активируем коллайдер игрока в полете и деактивируем коллайдер для перемещения
+        mainPlayerCollider.SetActive(false);
+        jumpingPlayerCollider.SetActive(true);
+
+        // Запуска анимации
+        //playerAnimator.SetTrigger("Jump");
+
+        // Физика прыжка
+        Vector3 jumpDirection;
+        if (runDirection.magnitude == 0)
+        {
+            jumpDirection = playerTransform.forward;
+        }
+        else
+        {
+            jumpDirection = playerTransform.TransformDirection(runDirection);
+        }
+        jumpDirection = jumpDirection.normalized;
+
+        playerRigidbody.AddForce((jumpDirection + Vector3.up) * playerRigidbody.mass * jumpForce);
+
+        // Разворот игрока по направлению прыжка
+        playerTransform.rotation = Quaternion.LookRotation(jumpDirection);
+
+        // Замедляем время.
+        //SlowDownTime();
+
+        // Время, после которого будет осуществляться проверка на приземление
+        //neededTimeForGroundCheck = Time.time + delayBeforeCheck;
     }
 
     /// <summary>
@@ -380,6 +437,18 @@ public class PlayerController : MonoBehaviour
 
         // Запуска анимации
         playerAnimator.SetTrigger("GetUp");
+
+        // Активируем коллайдер игрока в полете и деактивируем коллайдер для перемещения
+        mainPlayerCollider.SetActive(true);
+        jumpingPlayerCollider.SetActive(false);
+    }
+    private void GetUpSimple()
+    {
+        shooting.canShoot = false;
+        isAiming = false;
+
+        // Запуска анимации
+        //playerAnimator.SetTrigger("GetUp");
 
         // Активируем коллайдер игрока в полете и деактивируем коллайдер для перемещения
         mainPlayerCollider.SetActive(true);
