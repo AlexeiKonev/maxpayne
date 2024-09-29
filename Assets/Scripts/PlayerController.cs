@@ -183,6 +183,15 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        CorectAnimation();
+    }
+    /// <summary>
+    /// Замена анимации. Обязательно происходит в LateUpdate.
+    /// </summary>
+
+    private void CorectAnimation()
+    {
+
         // Если игрок в полете - передает в его Animator параметры для
         // корректного отоброжения положения тела в полете - 
         // анимация разворачивается в ту же сторону, в которую игрок целится.
@@ -216,9 +225,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Замена анимации. Обязательно происходит в LateUpdate.
-    /// </summary>
     private void LateUpdate()
     {
         // Если игрок целится - ориентируем объекты запястьев по направлению к прицелу.
