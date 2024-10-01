@@ -59,6 +59,7 @@ public class WeaponManager : MonoBehaviour
                 {
                     weaponsObjects[0].weapons[0].SetActive(true); // Assuming pistol is at [0][0]
                     weaponsObjects[0].weapons[1].SetActive(true); // Assuming pistol is at [0][1]
+                    weaponsObjects[0].weapons[2].SetActive(true); // Assuming pistol is at [0][1]
                     Debug.Log("Switched to pistol");
                 }
                 break;
@@ -67,6 +68,7 @@ public class WeaponManager : MonoBehaviour
                 {
                     weaponsObjects[1].weapons[0].SetActive(true); // Assuming uzi is at [1][0]
                     weaponsObjects[1].weapons[1].SetActive(true); // Assuming uzi is at [1][1]
+                    weaponsObjects[1].weapons[2].SetActive(true); // Assuming uzi is at [1][1]
                     Debug.Log("Switched to uzi");
                 }
                 break;
