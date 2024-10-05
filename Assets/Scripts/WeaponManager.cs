@@ -8,6 +8,11 @@ public class WeaponArray
 
 public class WeaponManager : MonoBehaviour
 {
+    [Header("одноручное прицеливание")]
+    [SerializeField] private PlayerController playerControllerSingleArmWeapon;
+    [Header("двуручное прицеливание")]
+    [SerializeField] private PlayerController playerControllerDualArmWeapon;
+
     public enum WeaponState { pistol, uzi }
     public WeaponState weaponState;
 
@@ -28,11 +33,15 @@ public class WeaponManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1)) // Press '1' for pistol
         {
             weaponState = WeaponState.pistol;
+            playerControllerSingleArmWeapon.enabled = true;
+            playerControllerDualArmWeapon.enabled = false;
             UpdateWeaponVisibility();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2)) // Press '2' for uzi
         {
             weaponState = WeaponState.uzi;
+            playerControllerSingleArmWeapon.enabled = false;
+            playerControllerDualArmWeapon.enabled = true;
             UpdateWeaponVisibility();
         }
     }
