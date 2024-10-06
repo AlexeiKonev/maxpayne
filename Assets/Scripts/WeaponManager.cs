@@ -20,6 +20,11 @@ public class WeaponManager : MonoBehaviour
 
     private int currentWeaponIndex = 0;
 
+    public Shooting shooting;
+
+    public float pistolShootingDelay = 0.5f;
+    public float uziShootingDelay = 0.1f;
+
     void Start()
     {
         weaponState = WeaponState.pistol; // Start with the pistol
@@ -79,9 +84,11 @@ public class WeaponManager : MonoBehaviour
         {
             case WeaponState.pistol:
                 ActivateWeapons(0);
+                shooting.shootingDelay = pistolShootingDelay;
                 break;
             case WeaponState.uzi:
                 ActivateWeapons(1);
+                shooting.shootingDelay = uziShootingDelay;
                 break;
             default:
                 Debug.Log("Unknown weapon state");
