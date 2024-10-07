@@ -85,10 +85,12 @@ public class WeaponManager : MonoBehaviour
             case WeaponState.pistol:
                 ActivateWeapons(0);
                 shooting.shootingDelay = pistolShootingDelay;
+                shooting.ammo = shooting.ammoPistolCurent;
                 break;
             case WeaponState.uzi:
                 ActivateWeapons(1);
                 shooting.shootingDelay = uziShootingDelay;
+                shooting.ammo = shooting.ammoUziCurent;
                 break;
             default:
                 Debug.Log("Unknown weapon state");

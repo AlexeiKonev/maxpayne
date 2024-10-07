@@ -18,10 +18,16 @@ public class Shooting : MonoBehaviour
 
     public AudioSource shootSound;
     public AudioSource reloadGunSound;
-    public float ammo = 20;
+    public float ammoPistol = 20;
+    public float ammoPistolCurent;
+    public float ammoUzi = 40;
+    public float ammoUziCurent;
+    public float ammo;
 
+    public WeaponManager weaponManager;
     private void Start()
     {
+        weaponManager = GameObject.Find("WeaponManager").GetComponent<WeaponManager>();
         mainCameraTransform = Camera.main.transform;
         nextShootTime = Time.time; // Initialize next shoot time
     }
@@ -32,6 +38,17 @@ public class Shooting : MonoBehaviour
     /// <param name="targetPosition">Target position for shooting</param>
     public void Shoot(Vector3 targetPosition)
     {
+        if (weaponManager.weaponState == WeaponManager.WeaponState.pistol)
+        { 
+            ammoPistolCurent = ammo;
+        
+        }
+        if (weaponManager.weaponState == WeaponManager.WeaponState.uzi) 
+        {
+            ammoUziCurent = ammo;
+        }
+            
+
         if (!canShoot || Time.time < nextShootTime) // Check if the player can shoot
             return;
 
@@ -79,8 +96,19 @@ public class Shooting : MonoBehaviour
 
     public void ReloadGun()
     {
-        reloadGunSound.Play();
-        ammo = 20; // Reset ammo count
-        // Optionally add a delay for reloading
+        if (weaponManager.weaponState == WeaponManager.WeaponState.pistol)
+        {
+            reloadGunSound.Play();
+            ammo = ammoPistol; // Reset ammo count
+                               // Optionally add a delay for reloading
+
+        }
+        if (weaponManager.weaponState == WeaponManager.WeaponState.uzi)
+        {
+            reloadGunSound.Play();
+            ammo = ammoUzi; // Reset ammo count
+                            // Optionally add a delay for reloading
+
+        }
     }
 }
