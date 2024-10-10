@@ -437,6 +437,7 @@ public class PlayerController : MonoBehaviour
 
         if (isGrounded)
         {
+            isStanding = true;
             NormalizeTime();
             
         }

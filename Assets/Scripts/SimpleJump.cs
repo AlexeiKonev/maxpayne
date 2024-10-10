@@ -12,14 +12,7 @@ public class SimpleJump : MonoBehaviour
 
     // Update is called once per frame
     void FixedUpdate()
-    {
-        if (playerController != null)
-        {
-            if(Input.GetKeyUp(KeyCode.LeftAlt)) 
-            {
-                Debug.Log("simple jump");
-            }
-        }
+    { 
 
     }
 }
