@@ -23433,7 +23433,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -13, y: -83.99999}
+  m_AnchoredPosition: {x: -13, y: -84}
   m_SizeDelta: {x: -187, y: -330}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!43 &1075797099
@@ -31952,7 +31952,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1418335813}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0032249826, y: -0, z: -0, w: 0.9999948}
+  m_LocalRotation: {x: 0.0032250013, y: -0, z: -0, w: 0.9999948}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -49091,7 +49091,12 @@ MonoBehaviour:
     m_Bits: 311
   shootSound: {fileID: 1738309034}
   reloadGunSound: {fileID: 1528339823}
+  ammoPistol: 20
+  ammoPistolCurent: 0
+  ammoUzi: 40
+  ammoUziCurent: 0
   ammo: 20
+  weaponManager: {fileID: 0}
 --- !u!114 &7390016283619020693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49175,6 +49180,7 @@ GameObject:
   - component: {fileID: 7390016283619020690}
   - component: {fileID: 7390016283619020696}
   - component: {fileID: 7390016283619020697}
+  - component: {fileID: 7390016283619020698}
   m_Layer: 9
   m_Name: Player_1
   m_TagString: Player
@@ -49319,6 +49325,19 @@ MonoBehaviour:
   mainPPVolume: {fileID: 1860512083}
   mainPPProfile: {fileID: 11400000, guid: ad9bc32405096c045848d60b65c899eb, type: 2}
   slowtimePPProfile: {fileID: 11400000, guid: 3c50c7cf552756745b7989b1ba9c8f46, type: 2}
+--- !u!114 &7390016283619020698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7390016283619020695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed1fb26118614f749a11167bd2611a2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 0}
 --- !u!4 &7410462539450839068
 Transform:
   m_ObjectHideFlags: 0

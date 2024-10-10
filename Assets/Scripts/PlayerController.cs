@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool isRunning = false;
     [SerializeField] private bool isAiming = false;
     [SerializeField] private bool handsAreRaised = false;
-    [SerializeField] private bool isGrounded = true;
+    [SerializeField] public bool isGrounded = true;
     [SerializeField] private bool isStanding = true;
     [SerializeField] private bool isTryingToStand = false;
 
@@ -385,7 +385,7 @@ public class PlayerController : MonoBehaviour
         //SlowDownTime();
 
         // Время, после которого будет осуществляться проверка на приземление
-         neededTimeForGroundCheck = Time.time + delayBeforeCheck;
+         //neededTimeForGroundCheck = Time.time + delayBeforeCheck;
         CheckForGroundedSimple();
     }
 
