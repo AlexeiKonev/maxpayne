@@ -18,9 +18,10 @@ public class Shooting : MonoBehaviour
 
     public AudioSource shootSound;
     public AudioSource reloadGunSound;
-    public float ammoPistol = 20;
+    public float ammoPistol = 12;
     public float ammoPistolCurent;
     public float ammoUzi = 40;
+    public float ammoUziAll = 400;
     public float ammoUziCurent;
     public float ammo;
 
@@ -40,12 +41,21 @@ public class Shooting : MonoBehaviour
     {
         if (weaponManager.weaponState == WeaponManager.WeaponState.pistol)
         { 
-            ammoPistolCurent = ammo;
+            if(ammo>0)
+            {
+                ammoPistolCurent = ammo - ammoPistol;
+            }
+            
         
         }
         if (weaponManager.weaponState == WeaponManager.WeaponState.uzi) 
         {
-            ammoUziCurent = ammo;
+
+            if (ammo > 0)
+            {
+
+                ammoUziCurent = ammo;
+            }
         }
             
 
