@@ -34,7 +34,7 @@ public class AmmoCountUI : MonoBehaviour
         {
             ammoUIMagazine.text = shooting.ammoUziCurent.ToString();
 
-            ammoUIAll.text = shooting.ammo.ToString();
+            ammoUIAll.text = shooting.ammoUziAll.ToString();
         }
 
         //ammoUIMagazine.text = shooting.ammo.ToString();

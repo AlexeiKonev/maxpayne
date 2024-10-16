@@ -159,11 +159,11 @@ public class PlayerController : MonoBehaviour
             {
                 Jump();
             }
-            else if (isGrounded && !isStanding && !isTryingToStand)
-            {
-                isTryingToStand = true;
-                GetUp();
-            }
+            //else if (isGrounded && !isStanding && !isTryingToStand)
+            //{
+            //    isTryingToStand = true;
+            //    GetUp();
+            //}
         } 
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
@@ -183,6 +183,13 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (isGrounded && !isStanding && !isTryingToStand)
+        {
+            isTryingToStand = true;
+            playerRigidbody.isKinematic = true;
+            GetUp();
+            playerRigidbody.isKinematic = false;
+        }
         CorectAnimation();
     }
     /// <summary>

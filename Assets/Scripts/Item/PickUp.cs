@@ -13,7 +13,7 @@ public class PickUp : MonoBehaviour
 
         if (collision.gameObject.tag == "Pistol")
         {
-            shooting.ammoPistol += 3f;
+            shooting.ammo += 3f;
 
             GameObject.Destroy(collision.gameObject);
             Debug.Log("PicUp Pistol ammo");
@@ -21,7 +21,7 @@ public class PickUp : MonoBehaviour
         }
         if (collision.gameObject.tag == "Uzi")
         {
-            shooting.ammoUzi += 8f;
+            shooting.ammoUziAll += 8f;
 
             GameObject.Destroy(collision.gameObject);
             Debug.Log("PicUp Uzi ammo");
