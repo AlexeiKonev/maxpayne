@@ -1,15 +1,25 @@
-using System;
 using UnityEngine;
-using static Reloader;
+using UnityEngine.UI;
 
 public class Reloader : MonoBehaviour
 {
-    public enum GunsStates { pistol,shootgun}
+    public enum GunsStates { pistol, shootgun }
     public GunsStates GunState;
 
     public Transform[] TransformGun;
     public GameObject bulletObject;
 
+    public int ammoPistol = 5;
+    public int ammoPistolAll = 200;
+    private int ammoPistolReload = 15;
+
+    private int ammoShootgunReload = 7;
+
+    public int ammoShootgun = 7;
+    public int ammoShootgunlAll = 102;
+
+    public Text ammoCurentUI;
+    public Text ammoAllUI;
 
     void Start()
     {
@@ -19,70 +29,136 @@ public class Reloader : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Alpha1)) 
+
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-        ChoseWeapon(GunsStates.pistol);
+            ChoseWeapon(GunsStates.pistol);
 
         }
-        if(Input.GetKeyDown(KeyCode.Alpha2)) 
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-        ChoseWeapon(GunsStates.shootgun);
+            ChoseWeapon(GunsStates.shootgun);
 
         }
 
 
         if (Input.GetKeyDown(KeyCode.LeftAlt))
         {
+            Shoot();
+        }
 
-           if( GunState== GunsStates.pistol) 
-            {
-            
-            Debug.Log("shoot");
-                GameObject.Instantiate(bulletObject, TransformGun[0].position,TransformGun[0].rotation);
-            }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Reload();
+        }
+    }
 
-            if (GunState == GunsStates.shootgun)
-            {
+    private void Reload()
+    {
+        if (GunState == GunsStates.pistol)
+        {
+            ReloadPistol();
+            Debug.Log("reload pistol");
 
-                Debug.Log("shoot shotgun");
-                foreach(Transform t in TransformGun)
-                {
-                    GameObject.Instantiate(bulletObject, t.position, t.rotation);
-                }
+        }
 
-                
-            }
+        if (GunState == GunsStates.shootgun)
+        {
+            ReloadShootgun();
+            Debug.Log("reload   shotgun");
+
+
+        }
+
+    }
+
+    private void Shoot()
+    {
+        if (GunState == GunsStates.pistol)
+        {
+
+            ShootPistol(bulletObject);
+        }
+
+        if (GunState == GunsStates.shootgun)
+        {
+
+            ShootShotgun(bulletObject);
+
+
         }
     }
 
     private void ChoseWeapon(GunsStates weapon)
     {
-        if(weapon == GunsStates.pistol)
+        if (weapon == GunsStates.pistol)
         {
-        GunState = GunsStates.pistol;
+            GunState = GunsStates.pistol;
 
         }
-        if(weapon == GunsStates.shootgun)
+        if (weapon == GunsStates.shootgun)
         {
-        GunState = GunsStates.shootgun;
+            GunState = GunsStates.shootgun;
 
         }
     }
 
     public void ShootShotgun(GameObject bulletObject)
     {
+        if (ammoShootgun > 0)
+        {
+            ammoShootgun -= 1;
+            Debug.Log("shoot shotgun");
+            foreach (Transform t in TransformGun)
+            {
+                GameObject.Instantiate(bulletObject, t.position, t.rotation);
+                UiUpdateAmmo(ammoShootgunlAll, ammoShootgun);
+            }
+        }
 
-    } 
+    }
     public void ShootPistol(GameObject bulletObject)
     {
-
-    } 
+        if (ammoPistol > 0)
+        {
+            ammoPistol -= 1;
+            Debug.Log("shoot");
+            GameObject.Instantiate(bulletObject, TransformGun[0].position, TransformGun[0].rotation);
+            UiUpdateAmmo(ammoPistolAll, ammoPistol);
+        }
+    }
     public void ShootUzi(GameObject bulletObject)
     {
 
-    } 
+    }
     public void ShootAk47(GameObject bulletObject)
     {
 
+    }
+
+    public void ReloadPistol()
+    {
+        if (ammoPistolAll > 0)
+        {
+            ammoPistol =+ ammoPistolReload;
+            ammoPistolAll -= ammoShootgunReload;
+            UiUpdateAmmo(ammoPistolAll, ammoPistol);
+        }
+    }
+    public void ReloadShootgun()
+    {
+        if (ammoShootgunlAll > 0 )
+        {
+            ammoShootgun =+ ammoShootgunReload;
+            ammoShootgunlAll -= ammoShootgunReload;
+            UiUpdateAmmo(ammoShootgunlAll, ammoShootgun);
+        }
+    }
+
+    private void UiUpdateAmmo(int allAmmo, int curentAmmo)
+    {
+        ammoAllUI.text = allAmmo.ToString();
+        ammoCurentUI.text = curentAmmo.ToString();
     }
 }
