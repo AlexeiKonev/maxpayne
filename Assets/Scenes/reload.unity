@@ -6355,9 +6355,9 @@ MonoBehaviour:
     type: 3}
   ammoPistol: 2
   ammoPistolAll: 200
-  ammoShootgun: 7
-  ammoShootgunlAll: 102
-  ammoCurentUI: {fileID: 1919624123}
+  ammoShotgun: 7
+  ammoShotgunAll: 102
+  ammoCurrentUI: {fileID: 1919624123}
   ammoAllUI: {fileID: 1879032348}
 --- !u!136 &951208000
 CapsuleCollider:

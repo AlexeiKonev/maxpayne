@@ -243,7 +243,15 @@ public class Reloader : MonoBehaviour
     private void ChoseWeapon(GunsStates weapon)
     {
         GunState = weapon;
-        UiUpdateAmmo(ammoPistolAll, ammoPistol); // Обновляем UI при смене оружия
+        if(GunsStates.pistol == GunState)
+        {
+            UiUpdateAmmo(ammoPistolAll, ammoPistol); // Обновляем UI при смене оружия
+        }  
+        if(GunsStates.shotgun == GunState)
+        {
+            UiUpdateAmmo(ammoShotgunAll, ammoShotgun); // Обновляем UI при смене оружия
+        }
+        
     }
 
     public void ShootShotgun(GameObject bulletObject)
