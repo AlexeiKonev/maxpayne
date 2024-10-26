@@ -203,7 +203,7 @@ public class Reloader : MonoBehaviour
             ChoseWeapon(GunsStates.shotgun);
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftAlt))
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             Shoot();
         }
