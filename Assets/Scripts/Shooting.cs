@@ -47,19 +47,19 @@ public class Shooting : MonoBehaviour
     /// Function to perform shooting
     /// </summary>
     /// <param name="targetPosition">Target position for shooting</param>
-    public void Shoot(Vector3 targetPosition)
+    public void Shoot()
     {
         if (!canShoot || Time.time < nextShootTime)
             return;
 
         if (weaponManager.weaponState == WeaponManager.WeaponState.pistol && ammo > 0)
         {
-            ShootBullet(targetPosition);
+            ShootBullet();
             ammo--;
         }
         else if (weaponManager.weaponState == WeaponManager.WeaponState.uzi && ammoUziCurent > 0)
         {
-            ShootBullet(targetPosition);
+            ShootBullet();
             ammoUziCurent--;
         }
         else
@@ -68,7 +68,7 @@ public class Shooting : MonoBehaviour
         }
     }
 
-    private void ShootBullet(Vector3 targetPosition)
+    private void ShootBullet()
     {
         shootSound.Play();
         nextShootTime = Time.time + shootingDelay;
@@ -78,19 +78,17 @@ public class Shooting : MonoBehaviour
             particle.Play();
         }
 
-        // Instantiate the bullet
-        GameObject bullet = Instantiate(bulletPrefab, gunTransform.position/*mainCameraTransform.position*/, Quaternion.identity);
-        Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
-
-        // Calculate direction and apply force
-        Vector3 direction = (targetPosition - mainCameraTransform.position).normalized;
-        bulletRb.AddForce(direction * 20f, ForceMode.Impulse); // Adjust speed as necessary
-
+        // Calculate direction using Raycast
         RaycastHit hit;
+        Vector3 direction = mainCameraTransform.forward; // Направление взгляда камеры
+
+        // Check if we hit something within range
         if (Physics.Raycast(mainCameraTransform.position, direction, out hit, range, layerMask))
         {
-            EnemyController enemy = hit.transform.GetComponent<EnemyController>();
+            // If we hit something, set the direction to that point
+            direction = (hit.point - gunTransform.position).normalized; // Направление к точке попадания
 
+            EnemyController enemy = hit.transform.GetComponent<EnemyController>();
             if (enemy != null)
             {
                 enemy.TakeDamage(damageAmount);
@@ -107,6 +105,13 @@ public class Shooting : MonoBehaviour
                 hitRigidbody.AddForce(impulseDirection.normalized * hitForce, ForceMode.Impulse);
             }
         }
+
+        // Instantiate the bullet
+        GameObject bullet = Instantiate(bulletPrefab, gunTransform.position, Quaternion.identity);
+        Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
+
+        // Apply force to the bullet in the calculated direction
+        bulletRb.AddForce(direction * 20f, ForceMode.Impulse); // Adjust speed as necessary
 
         Destroy(bullet, 5f); // Destroy the bullet after 5 seconds to clean up
     }

@@ -126,7 +126,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             isAiming = true;
-            shooting.Shoot(crosshairWorldPositionWithOffsets);
+            shooting.Shoot(/*crosshairWorldPositionWithOffsets*/);
         }
 
         if (Input.GetMouseButtonUp(0) && !Input.GetMouseButton(1))
