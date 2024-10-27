@@ -49638,7 +49638,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1418335813}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0032249808, y: -0, z: -0, w: 0.9999948}
+  m_LocalRotation: {x: 0.003224985, y: -0, z: -0, w: 0.9999948}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -70194,6 +70194,8 @@ MonoBehaviour:
   ammoUziCurent: 0
   ammo: 20
   weaponManager: {fileID: 0}
+  bulletPrefab: {fileID: 430382342518523610, guid: 2f6bc65fed33da343a7b323436e71673,
+    type: 3}
 --- !u!114 &7390016283619020693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70456,7 +70458,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7390016283619020695}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d701b8abb66b123458d5fb68063efa85, type: 3}
   m_Name: 

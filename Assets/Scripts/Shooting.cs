@@ -3,18 +3,17 @@
 public class Shooting : MonoBehaviour
 {
     public bool canShoot = true;
-
     public int damageAmount = 20;
     public float range = 100f;
-    public float shootingDelay = 0.5f; // Set to a reasonable delay (e.g., 0.5 seconds)
-    public float hitForce = 10f; // Force applied on hit
+    public float shootingDelay = 0.5f;
+    public float hitForce = 10f;
 
     public ParticleSystem[] shootParticles;
     public ParticleSystem bulletCollisionParticles;
     public LayerMask layerMask;
 
     private Transform mainCameraTransform;
-    private float nextShootTime; // Time when the player can shoot again
+    private float nextShootTime;
 
     public AudioSource shootSound;
     public AudioSource reloadGunSound;
@@ -30,6 +29,8 @@ public class Shooting : MonoBehaviour
 
     public WeaponManager weaponManager;
 
+    // Add this line for the bullet prefab
+    public GameObject bulletPrefab; // Assign this in the Inspector
 
     private void Start()
     {
@@ -37,7 +38,7 @@ public class Shooting : MonoBehaviour
         ammoUziCurent = ammoUzi;
         weaponManager = GameObject.Find("WeaponManager").GetComponent<WeaponManager>();
         mainCameraTransform = Camera.main.transform;
-        nextShootTime = Time.time; // Initialize next shoot time
+        nextShootTime = Time.time;
     }
 
     /// <summary>
@@ -46,143 +47,81 @@ public class Shooting : MonoBehaviour
     /// <param name="targetPosition">Target position for shooting</param>
     public void Shoot(Vector3 targetPosition)
     {
-        if (weaponManager.weaponState == WeaponManager.WeaponState.pistol)
+        if (!canShoot || Time.time < nextShootTime)
+            return;
+
+        if (weaponManager.weaponState == WeaponManager.WeaponState.pistol && ammo > 0)
         {
-            if (ammo > 0)
-            {
-                ammoPistolCurent = ammo - ammoPistol;
-            }
-
-            if (!canShoot || Time.time < nextShootTime) // Check if the player can shoot
-                return;
-
-            shootSound.Play();
-
-            if (ammo > 0)
-            {
-                nextShootTime = Time.time + shootingDelay; // Set the next shoot time
-                ammo--;
-
-                foreach (var particle in shootParticles)
-                {
-                    particle.Play();
-                }
-
-                Vector3 direction = (targetPosition - mainCameraTransform.position).normalized;
-
-                RaycastHit hit;
-                if (Physics.Raycast(mainCameraTransform.position, direction, out hit, range, layerMask))
-                {
-                    EnemyController enemy = hit.transform.GetComponent<EnemyController>();
-
-                    if (enemy != null)
-                    {
-                        enemy.TakeDamage(damageAmount);
-                    }
-
-                    bulletCollisionParticles.transform.position = hit.point;
-                    bulletCollisionParticles.transform.LookAt(mainCameraTransform);
-                    bulletCollisionParticles.Play();
-
-                    Rigidbody hitRigidbody = hit.collider.GetComponent<Rigidbody>();
-                    if (hitRigidbody != null)
-                    {
-                        Vector3 impulseDirection = hit.point - mainCameraTransform.position;
-                        hitRigidbody.AddForce(impulseDirection.normalized * hitForce, ForceMode.Impulse);
-                    }
-                }
-            }
-            else
-            {
-                ReloadGun(); // Reload if ammo is empty
-            }
+            ShootBullet(targetPosition);
+            ammo--;
         }
-        if (weaponManager.weaponState == WeaponManager.WeaponState.uzi)
+        else if (weaponManager.weaponState == WeaponManager.WeaponState.uzi && ammoUziCurent > 0)
         {
+            ShootBullet(targetPosition);
+            ammoUziCurent--;
+        }
+        else
+        {
+            ReloadGun();
+        }
+    }
 
-            if (ammoUziAll > 0)
+    private void ShootBullet(Vector3 targetPosition)
+    {
+        shootSound.Play();
+        nextShootTime = Time.time + shootingDelay;
+
+        foreach (var particle in shootParticles)
+        {
+            particle.Play();
+        }
+
+        // Instantiate the bullet
+        GameObject bullet = Instantiate(bulletPrefab, mainCameraTransform.position, Quaternion.identity);
+        Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
+
+        // Calculate direction and apply force
+        Vector3 direction = (targetPosition - mainCameraTransform.position).normalized;
+        bulletRb.AddForce(direction * 20f, ForceMode.Impulse); // Adjust speed as necessary
+
+        RaycastHit hit;
+        if (Physics.Raycast(mainCameraTransform.position, direction, out hit, range, layerMask))
+        {
+            EnemyController enemy = hit.transform.GetComponent<EnemyController>();
+
+            if (enemy != null)
             {
-
-                ammoUziCurent = ammoUzi;
-                ammoUziAll -= ammoUzi;
+                enemy.TakeDamage(damageAmount);
             }
-            //else if (ammoUziAll > 0 && ammoUziAll < ammoUzi)
-            //{
-            //    ammoUziCurent = ammoUziAll;
-            //}
-            if (!canShoot || Time.time < nextShootTime) // Check if the player can shoot
-                return;
 
-            shootSound.Play();
+            bulletCollisionParticles.transform.position = hit.point;
+            bulletCollisionParticles.transform.LookAt(mainCameraTransform);
+            bulletCollisionParticles.Play();
 
-            if (ammoUziCurent > 0)
+            Rigidbody hitRigidbody = hit.collider.GetComponent<Rigidbody>();
+            if (hitRigidbody != null)
             {
-                nextShootTime = Time.time + shootingDelay; // Set the next shoot time
-                ammoUziCurent--;
-
-                foreach (var particle in shootParticles)
-                {
-                    particle.Play();
-                }
-
-                Vector3 direction = (targetPosition - mainCameraTransform.position).normalized;
-
-                RaycastHit hit;
-                if (Physics.Raycast(mainCameraTransform.position, direction, out hit, range, layerMask))
-                {
-                    EnemyController enemy = hit.transform.GetComponent<EnemyController>();
-
-                    if (enemy != null)
-                    {
-                        enemy.TakeDamage(damageAmount);
-                    }
-
-                    bulletCollisionParticles.transform.position = hit.point;
-                    bulletCollisionParticles.transform.LookAt(mainCameraTransform);
-                    bulletCollisionParticles.Play();
-
-                    Rigidbody hitRigidbody = hit.collider.GetComponent<Rigidbody>();
-                    if (hitRigidbody != null)
-                    {
-                        Vector3 impulseDirection = hit.point - mainCameraTransform.position;
-                        hitRigidbody.AddForce(impulseDirection.normalized * hitForce, ForceMode.Impulse);
-                    }
-                }
-            }
-            else
-            {
-                ReloadGun(); // Reload if ammo is empty
+                Vector3 impulseDirection = hit.point - mainCameraTransform.position;
+                hitRigidbody.AddForce(impulseDirection.normalized * hitForce, ForceMode.Impulse);
             }
         }
 
-
-
+        Destroy(bullet, 5f); // Destroy the bullet after 5 seconds to clean up
     }
 
     public void ReloadGun()
     {
+        reloadGunSound.Play();
+
         if (weaponManager.weaponState == WeaponManager.WeaponState.pistol)
         {
-            reloadGunSound.Play();
-            ammo = ammoPistol; // Reset ammo count
-                               // Optionally add a delay for reloading
-
+            ammo = ammoPistol;
         }
-        if (weaponManager.weaponState == WeaponManager.WeaponState.uzi)
+
+        if (weaponManager.weaponState == WeaponManager.WeaponState.uzi && ammoUziAll > 0)
         {
-            reloadGunSound.Play();
-            /* ammo = ammoUzi;*/ // Reset ammo count
-                                 // Optionally add a delay for reloading
-
-
-            if (ammoUziAll > 0)
-            {
-
-                ammoUziAll -= ammoUzi;
-                ammoUziCurent = ammoUzi;
-            }
-             
-
+            ammoUziAll -= ammoUzi;
+            ammoUziCurent = ammoUzi;
         }
     }
 }
