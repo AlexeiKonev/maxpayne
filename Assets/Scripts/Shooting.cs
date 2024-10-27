@@ -2,6 +2,8 @@
 
 public class Shooting : MonoBehaviour
 {
+    public Transform gunTransform;
+
     public bool canShoot = true;
     public int damageAmount = 20;
     public float range = 100f;
@@ -77,7 +79,7 @@ public class Shooting : MonoBehaviour
         }
 
         // Instantiate the bullet
-        GameObject bullet = Instantiate(bulletPrefab, mainCameraTransform.position, Quaternion.identity);
+        GameObject bullet = Instantiate(bulletPrefab, gunTransform.position/*mainCameraTransform.position*/, Quaternion.identity);
         Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
 
         // Calculate direction and apply force
