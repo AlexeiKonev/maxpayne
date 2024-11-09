@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
-enum PlayerStates { Jump,SlowJump,Stand,Walk}
+enum PlayerStates { Jump, SlowJump, Stand, Walk }
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Animator))]
@@ -69,7 +67,7 @@ public class PlayerController : MonoBehaviour
     public PostProcessProfile mainPPProfile = null;
     public PostProcessProfile slowtimePPProfile = null;
 
-   
+
 
     /// <summary>
     /// Инициализация параметров.
@@ -114,11 +112,24 @@ public class PlayerController : MonoBehaviour
         // Прицеливание
         if (Input.GetMouseButtonDown(1))
         {
+
+
+
+            if (!isAiming)
+            {
+                CursorManager.Instance.ZoomIn();
+            }
             isAiming = true;
         }
 
         if (Input.GetMouseButtonUp(1) && !Input.GetMouseButton(0))
         {
+
+
+            if (isAiming)
+            {
+                CursorManager.Instance.ZoomOut();
+            }
             isAiming = false;
         }
 
@@ -135,22 +146,22 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        if (Input.GetKeyDown(KeyCode.LeftAlt) )
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
         {
             if (!timeSlowed)
             {
-            timeSlowed = true;
-            SlowDownTime();
+                timeSlowed = true;
+                SlowDownTime();
             }
             else
             {
                 timeSlowed = false;
                 NormalizeTime();
             }
-            
-           
+
+
         }
-        
+
 
         // Прыжок или поднятие
         if (Input.GetKeyDown(KeyCode.Space))
@@ -164,13 +175,13 @@ public class PlayerController : MonoBehaviour
             //    isTryingToStand = true;
             //    GetUp();
             //}
-        } 
+        }
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
             if (isGrounded && isStanding)
             {
-                JumpSimple(); 
-                
+                JumpSimple();
+
             }
             else if (isGrounded && !isStanding && !isTryingToStand)
             {
@@ -178,7 +189,7 @@ public class PlayerController : MonoBehaviour
                 GetUp();
             }
         }
-       
+
     }
 
     private void FixedUpdate()
@@ -354,7 +365,7 @@ public class PlayerController : MonoBehaviour
 
         // Время, после которого будет осуществляться проверка на приземление
         neededTimeForGroundCheck = Time.time + delayBeforeCheck;
-    }  
+    }
     private void JumpSimple()
     {
         // Обнуляем скорость игрока, чтобы он не пролетал больше нужного
@@ -392,7 +403,7 @@ public class PlayerController : MonoBehaviour
         //SlowDownTime();
 
         // Время, после которого будет осуществляться проверка на приземление
-         //neededTimeForGroundCheck = Time.time + delayBeforeCheck;
+        //neededTimeForGroundCheck = Time.time + delayBeforeCheck;
         CheckForGroundedSimple();
     }
 
@@ -421,9 +432,10 @@ public class PlayerController : MonoBehaviour
         if (isGrounded)
         {
             NormalizeTime();
-            
+
         }
-    }private void CheckForGroundedSimple()
+    }
+    private void CheckForGroundedSimple()
     {
         if (Time.time < neededTimeForGroundCheck) return;
 
@@ -446,7 +458,7 @@ public class PlayerController : MonoBehaviour
         {
             isStanding = true;
             NormalizeTime();
-            
+
         }
     }
 

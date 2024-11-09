@@ -1,35 +1,53 @@
+using Cinemachine;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CursorManager : MonoBehaviour
 {
+    public CinemachineFreeLook cinemachineFreeLook;
     public Image cursor;
+
+    public Transform zoomScope;
+    public Transform defaultScope;
 
     public GameObject cursorDead;
 
-   public static CursorManager Instance;
+    public static CursorManager Instance;
 
     void Start()
     {
+
         if (Instance == null)
         {
             Instance = this;
         }
 
+        zoomScope = GameObject.Find("Zoom").GetComponent<Transform>();  
+        defaultScope = GameObject.Find("Player_1").GetComponent<Transform>();  
+
+        cinemachineFreeLook = GameObject.Find("CM FreeLook").GetComponent<CinemachineFreeLook>();
         cursor = GameObject.Find("Crosshair Image").GetComponent<Image>();
         cursor.color = Color.white;
     }
-    public void ShowDeadCursor(float delayseconds )
+    public void ShowDeadCursor(float delayseconds)
     {
 
         StartCoroutine(ShowDeadDelay(delayseconds));
     }
-    public   IEnumerator ShowDeadDelay(float delay)
+    public IEnumerator ShowDeadDelay(float delay)
     {
         cursorDead.gameObject.SetActive(true);
-        yield return new  WaitForSeconds(delay);
+        yield return new WaitForSeconds(delay);
         cursorDead.gameObject.SetActive(false);
+    }
+    public void ZoomIn()
+    {
+        cinemachineFreeLook.Follow = zoomScope;
+    }
+    public void ZoomOut()
+    {
+        cinemachineFreeLook.Follow = defaultScope;
     }
     private void Update()
     {
