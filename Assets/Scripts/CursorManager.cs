@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,16 +6,32 @@ public class CursorManager : MonoBehaviour
 {
     public Image cursor;
 
+    public GameObject cursorDead;
+
+   public static CursorManager Instance;
 
     void Start()
     {
-
+        if (Instance == null)
+        {
+            Instance = this;
+        }
 
         cursor = GameObject.Find("Crosshair Image").GetComponent<Image>();
         cursor.color = Color.white;
     }
+    public void ShowDeadCursor(float delayseconds )
+    {
 
-    private void FixedUpdate()
+        StartCoroutine(ShowDeadDelay(delayseconds));
+    }
+    public   IEnumerator ShowDeadDelay(float delay)
+    {
+        cursorDead.gameObject.SetActive(true);
+        yield return new  WaitForSeconds(delay);
+        cursorDead.gameObject.SetActive(false);
+    }
+    private void Update()
     {
 
 
