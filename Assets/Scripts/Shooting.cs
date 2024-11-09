@@ -2,6 +2,7 @@
 
 public class Shooting : MonoBehaviour
 {
+    public static Shooting Instance;
     public Transform gunTransform;
 
     public bool canShoot = true;
@@ -14,7 +15,7 @@ public class Shooting : MonoBehaviour
     public ParticleSystem bulletCollisionParticles;
     public LayerMask layerMask;
 
-    private Transform mainCameraTransform;
+    public Transform mainCameraTransform;
     private float nextShootTime;
 
     public AudioSource shootSound;
@@ -36,6 +37,10 @@ public class Shooting : MonoBehaviour
 
     private void Start()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
         ammo = ammoPistol;
         ammoUziCurent = ammoUzi;
         weaponManager = GameObject.Find("WeaponManager").GetComponent<WeaponManager>();
@@ -89,6 +94,8 @@ public class Shooting : MonoBehaviour
             direction = (hit.point - gunTransform.position).normalized; // Направление к точке попадания
 
             EnemyController enemy = hit.transform.GetComponent<EnemyController>();
+             
+        
             if (enemy != null)
             {
                 enemy.TakeDamage(damageAmount);
