@@ -29,6 +29,7 @@ public class Shooting : MonoBehaviour
     public float ammoUziCurent;
 
     public float ammo;
+    public float bulletSpeed =200f;
 
     public WeaponManager weaponManager;
 
@@ -118,7 +119,7 @@ public class Shooting : MonoBehaviour
         Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
 
         // Apply force to the bullet in the calculated direction
-        bulletRb.AddForce(direction * 20f, ForceMode.Impulse); // Adjust speed as necessary
+        bulletRb.AddForce(direction * bulletSpeed, ForceMode.Impulse); // Adjust speed as necessary
 
         Destroy(bullet, 5f); // Destroy the bullet after 5 seconds to clean up
     }
