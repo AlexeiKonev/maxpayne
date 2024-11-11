@@ -9,13 +9,13 @@ public class EnemyAI : MonoBehaviour
     public NavMeshAgent agent;
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>(); agent.SetDestination(targetAI.position);
+        agent = GetComponent<NavMeshAgent>(); 
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-        
+        agent.SetDestination(targetAI.position);
+
     }
 }
