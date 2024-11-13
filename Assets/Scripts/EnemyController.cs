@@ -28,7 +28,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    void Die()
+ public   void Die()
     {
         CursorManager.Instance.ShowDeadCursor(1f);
         // Запуск анимации смерти и другие действия, связанные с смертью врага
