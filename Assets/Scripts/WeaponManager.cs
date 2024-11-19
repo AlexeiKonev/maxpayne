@@ -61,7 +61,9 @@ public class WeaponManager : MonoBehaviour
     private void SwitchToWeapon(int index)
     {
         weaponState = (WeaponState)index;
+
         playerControllerSingleArmWeapon.enabled = (weaponState == WeaponState.pistol);
+
         playerControllerDualArmWeapon.enabled = (weaponState == WeaponState.uzi);
 
         UpdateWeaponVisibility();
