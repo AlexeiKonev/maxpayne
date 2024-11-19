@@ -8,7 +8,7 @@ public class WeaponArray
 public class WeaponManager : MonoBehaviour
 {
     [Header("одноручное прицеливание")]
-    [SerializeField] private PlayerController playerControllerSingleArmWeapon;
+    //[SerializeField] private PlayerController playerControllerSingleArmWeapon;
 
     [Header("двуручное прицеливание")]
     [SerializeField] private PlayerController playerControllerDualArmWeapon;
@@ -62,9 +62,9 @@ public class WeaponManager : MonoBehaviour
     {
         weaponState = (WeaponState)index;
 
-        playerControllerSingleArmWeapon.enabled = (weaponState == WeaponState.pistol);
+        //playerControllerSingleArmWeapon.enabled = (weaponState == WeaponState.pistol);
 
-        playerControllerDualArmWeapon.enabled = (weaponState == WeaponState.uzi);
+        //playerControllerDualArmWeapon.enabled = (weaponState == WeaponState.uzi);
 
         UpdateWeaponVisibility();
     }
