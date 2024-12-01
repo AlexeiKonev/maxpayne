@@ -31,7 +31,7 @@ public class EnemyController : MonoBehaviour
         CursorManager.Instance.ShowDeadCursor(1f);
         // Запуск анимации смерти и другие действия, связанные с смертью врага
         GetComponent<Animator>().SetTrigger("Die");
-        enemyAi.enabled =false;
+        enemyAi.enabled = false;
         Destroy(gameObject, 20f); // Уничтожаем объект врага через 20 секунд  после смерти
     }
 }

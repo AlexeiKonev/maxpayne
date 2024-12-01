@@ -164,7 +164,7 @@ public class PlayerController : MonoBehaviour
 
 
         // Прыжок или поднятие
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown( KeyCode.LeftShift))
         {
             if (isGrounded && isStanding)
             {
@@ -176,7 +176,7 @@ public class PlayerController : MonoBehaviour
             //    GetUp();
             //}
         }
-        if (Input.GetKeyDown(KeyCode.LeftControl))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             if (isGrounded && isStanding)
             {
@@ -187,6 +187,15 @@ public class PlayerController : MonoBehaviour
             {
                 isTryingToStand = true;
                 GetUp();
+            }
+
+
+            if (!isGrounded  )
+            {
+                isGrounded = true;
+                timeSlowed = false;
+                NormalizeTime();
+
             }
         }
 
