@@ -29,7 +29,7 @@ public class Shooting : MonoBehaviour
     public float ammoUziCurent;
 
     public float ammo;
-    public float bulletSpeed =200f;
+    public float bulletSpeed =2000f;
 
     public WeaponManager weaponManager;
 
@@ -101,17 +101,17 @@ public class Shooting : MonoBehaviour
             {
                 enemy.TakeDamage(damageAmount);
             }
+            //выключен рейкаст
+            ////bulletCollisionParticles.transform.position = hit.point;
+            ////bulletCollisionParticles.transform.LookAt(mainCameraTransform);
+            ////bulletCollisionParticles.Play();
 
-            bulletCollisionParticles.transform.position = hit.point;
-            bulletCollisionParticles.transform.LookAt(mainCameraTransform);
-            bulletCollisionParticles.Play();
-
-            Rigidbody hitRigidbody = hit.collider.GetComponent<Rigidbody>();
-            if (hitRigidbody != null)
-            {
-                Vector3 impulseDirection = hit.point - mainCameraTransform.position;
-                hitRigidbody.AddForce(impulseDirection.normalized * hitForce, ForceMode.Impulse);
-            }
+            ////Rigidbody hitRigidbody = hit.collider.GetComponent<Rigidbody>();
+            ////if (hitRigidbody != null)
+            ////{
+            ////    Vector3 impulseDirection = hit.point - mainCameraTransform.position;
+            ////    hitRigidbody.AddForce(impulseDirection.normalized * hitForce, ForceMode.Impulse);
+            ////}
         }
 
         // Instantiate the bullet
@@ -119,7 +119,7 @@ public class Shooting : MonoBehaviour
         Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
 
         // Apply force to the bullet in the calculated direction
-        bulletRb.AddForce(direction * bulletSpeed, ForceMode.Impulse); // Adjust speed as necessary
+        bulletRb.AddForce(direction * bulletSpeed, ForceMode.Impulse +100); // Adjust speed as necessary
 
         Destroy(bullet, 5f); // Destroy the bullet after 5 seconds to clean up
     }
