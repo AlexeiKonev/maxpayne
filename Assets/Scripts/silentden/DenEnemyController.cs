@@ -18,6 +18,14 @@ public class DenEnemyController : MonoBehaviour
             Destroy(enemyObj);
         }
     }
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.tag == "Bullet")
+        {
+            Health = Health - 20;
+            Debug.Log($"health {Health}");
+        }
+    }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Bullet")
