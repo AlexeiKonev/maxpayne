@@ -9,9 +9,16 @@ EditorBuildSettings:
     path: Assets/Scenes/startmenu.unity
     guid: 147e3b4afd8ecf748b877fa6f3580467
   - enabled: 1
-    path: Assets/Scenes/z5.unity
-    guid: 7cb63fb75ee1652479b3d94c55654d1e
+    path: Assets/Scenes/z20.unity
+    guid: 38fa24f24c4184d4ab054b3f7d734f6e
   - enabled: 1
     path: Assets/Scenes/pain2.unity
     guid: e04674843613c634aa06311f6f85a3eb
-  m_configObjects: {}
+  - enabled: 1
+    path: Assets/Scenes/z5.unity
+    guid: 7cb63fb75ee1652479b3d94c55654d1e
+  m_configObjects:
+    com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 81dffa6a45d20574d902b3ce72211be8,
+      type: 2}
+    com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000,
+      guid: 4f1e817ef5b95f749a914cdc10621ce8, type: 2}
