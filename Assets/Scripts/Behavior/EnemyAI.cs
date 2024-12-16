@@ -31,12 +31,14 @@ public class EnemyAI : MonoBehaviour
 
         if (distanceToTarget <= distanceOfStop)
         {
-            agent.isStopped = true;
+            agent.isStopped = true; 
+            transform.LookAt(targetAI);
         }
         else
         {
             agent.isStopped = false;
             agent.SetDestination(targetAI.position);
+            
         }
     }
 }
